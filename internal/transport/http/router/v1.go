@@ -61,6 +61,7 @@ func (g *v1Group) useRoutes() {
 		meGroup.GET("", g.meHandler.GetMe, g.activityMiddleware(enum.Activity_Get_My_Profile))
 		meGroup.GET("/activities", g.meHandler.GetActivities, g.activityMiddleware(enum.Activity_Get_My_Activities))
 		meGroup.GET("/enrolments", g.meHandler.GetEnrolments, g.activityMiddleware(enum.Activity_Get_My_Enrolments))
+		meGroup.POST("/enrolments", g.meHandler.CreateEnrolment, g.activityMiddleware(enum.Activity_Greate_My_Enrolment))
 		meGroup.GET("/messages", g.meHandler.GetMessages, g.activityMiddleware(enum.Activity_Get_My_Messages))
 	}
 

@@ -108,7 +108,7 @@ func Error(c *gin.Context, err error, msg ...string) {
 func ValidationError(c *gin.Context, err error) {
 	c.AbortWithStatusJSON(http.StatusBadRequest, Response{
 		Success: false,
-		Status:  http.StatusBadRequest,
+		Status:  http.StatusUnprocessableEntity,
 		Message: "Request validation error",
 		Data:    err,
 	})

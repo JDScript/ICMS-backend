@@ -84,13 +84,13 @@ func Paginate(c *gin.Context, db *gorm.DB, data interface{}, stableSort ...strin
 }
 
 func (p Paginator) getPageSize() int {
-	queryPerSize := p.ctx.DefaultQuery("pageSize", "20")
+	queryPerSize := p.ctx.DefaultQuery("page_size", "20")
 	return cast.ToInt(queryPerSize)
 }
 
 func (p Paginator) getCurrent() int {
 	// 优先取用户请求的 page
-	page := cast.ToInt(p.ctx.Query("current"))
+	page := cast.ToInt(p.ctx.Query("page"))
 	if page <= 0 {
 		// 默认为 1
 		page = 1

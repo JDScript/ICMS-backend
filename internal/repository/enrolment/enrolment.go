@@ -30,3 +30,7 @@ func (repo *EnrolmentRepository) IsEnrolledInCourse(userId int32, courseId int64
 	}
 	return nil
 }
+
+func (repo *EnrolmentRepository) Create(enrolment *model.Enrolment) error {
+	return repo.db.Create(enrolment).Error
+}
