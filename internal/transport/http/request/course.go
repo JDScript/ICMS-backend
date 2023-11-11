@@ -4,11 +4,14 @@ type CoursePaginateRequest struct {
 	PaginationRequest
 	Search *string `query:"search"`
 }
-
-type CourseSectionsGetRequest struct {
+type CourseGetRequest struct {
 	CourseID int64 `path:"courseId"`
 }
 
+type CourseSectionsGetRequest struct {
+	CourseGetRequest
+}
+
 type CourseMessagesGetRequest struct {
-	CourseID int64 `path:"courseId"`
+	CourseGetRequest
 }

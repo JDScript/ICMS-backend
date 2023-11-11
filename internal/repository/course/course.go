@@ -46,3 +46,8 @@ func (repo *CourseRepository) GetCourseContents(courseId int64) []model.CourseSe
 	repo.db.Model(&sections).Where("course_id", courseId).Preload("Modules").Find(&sections)
 	return sections
 }
+
+func (repo *CourseRepository) GetCourse(courseId int64) (course *model.Course) {
+	repo.db.Where("id", courseId).Find(&course)
+	return
+}
