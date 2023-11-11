@@ -79,7 +79,7 @@ func (g *v1Group) useRoutes() {
 	{
 		courseGroup.GET("", g.courseHandler.Paginate, g.activityMiddleware(enum.Activity_Search_All_Courses))
 		courseGroup.GET("/:courseId", g.courseHandler.Get, g.activityMiddleware(enum.Activity_Get_Course_Detail))
-		courseGroup.GET("/:courseId/sections", g.courseHandler.GetSections, g.activityMiddleware(enum.Activity_Get_Course_Contents))
+		courseGroup.GET("/:courseId/sections", g.courseHandler.GetSections, g.activityMiddleware(enum.Activity_Get_Course_Sections))
 		courseGroup.GET("/:courseId/messages", g.courseHandler.GetMessages, g.activityMiddleware(enum.Activity_Get_Course_Messages))
 	}
 
