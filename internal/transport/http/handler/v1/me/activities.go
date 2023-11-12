@@ -20,3 +20,14 @@ func (handler *MeHandler) GetActivities(c *gin.Context) {
 
 	response.JSON(c, http.StatusOK, true, "Query success", paging)
 }
+
+func (handler *MeHandler) ClearActivities(c *gin.Context) {
+	userId := auth.CurrentUID(c)
+	err := handler.activityRepo.Clear(userId)
+	if err != nil {
+		response.Abort500(c, err.Error())
+		return
+	}
+
+	response.JSON(c, http.StatusNoContent, true, "Cleared all activities", nil)
+}

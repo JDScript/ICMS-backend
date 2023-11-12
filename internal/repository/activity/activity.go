@@ -38,3 +38,7 @@ func (repo *ActivityRepository) PaginateByUser(
 	)
 	return
 }
+
+func (repo *ActivityRepository) Clear(userId int32) error {
+	return repo.db.Where("user_id", userId).Delete(&model.Activity{}).Error
+}

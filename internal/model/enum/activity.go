@@ -7,6 +7,7 @@ const (
 	Activity_Login               ActivityType = "login"
 	Activity_Get_My_Profile      ActivityType = "get_my_profile"
 	Activity_Get_My_Activities   ActivityType = "get_my_activities"
+	Activity_Clear_My_Activities ActivityType = "clear_my_activities"
 	Activity_Get_My_Enrolments   ActivityType = "get_my_enrolments"
 	Activity_Greate_My_Enrolment ActivityType = "create_my_enrolment"
 	Activity_Get_My_Messages     ActivityType = "get_my_messages"
