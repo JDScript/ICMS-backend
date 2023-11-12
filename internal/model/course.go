@@ -15,7 +15,7 @@ type Course struct {
 	Summary    string  `gorm:"text" json:"summary"`
 	ZoomLink   *string `gorm:"varchar(255)" json:"zoom_link"`
 
-	Timeslots CourseTimeslots `gorm:"type:json" json:"slots"`
+	Timeslots CourseTimeslots `gorm:"type:json" json:"slots,omitempty"`
 
 	CommonTimestampField
 }

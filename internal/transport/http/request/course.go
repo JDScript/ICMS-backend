@@ -13,5 +13,8 @@ type CourseSectionsGetRequest struct {
 }
 
 type CourseMessagesGetRequest struct {
+	PaginationRequest
 	CourseGetRequest
+	Order string `query:"order" vd:"@:mblen($)==0; msg:'No order should be provided'" default:""`
+	Sort  string `query:"sort" vd:"@:mblen($)==0; msg:'No sort should be provided'" default:""`
 }

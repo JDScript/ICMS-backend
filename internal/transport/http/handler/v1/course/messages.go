@@ -21,7 +21,7 @@ func (hander *CourseHandler) GetMessages(c *gin.Context) {
 		return
 	}
 
-	messages := hander.messageRepo.GetCourseMessages(req.CourseID, user.ID)
+	paging := hander.messageRepo.GetCourseMessages(c, req.CourseID, user.ID)
 
-	response.JSON(c, http.StatusOK, true, "Query success", messages)
+	response.JSON(c, http.StatusOK, true, "Query success", paging)
 }
