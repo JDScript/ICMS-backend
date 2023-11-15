@@ -91,7 +91,8 @@ func (g *v1Group) useRoutes() {
 
 	chatGroup := g.group.Group("/chat")
 	{
-		chatGroup.POST("/refresh_token", g.chatHandler.RefreshToken)
 		chatGroup.Any("/*path", g.authMiddleware(), g.chatHandler.ChatCompletions)
 	}
+
+	g.group.POST("/ms/refresh_token", g.chatHandler.RefreshToken)
 }
