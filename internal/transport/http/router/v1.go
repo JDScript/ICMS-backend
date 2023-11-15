@@ -3,6 +3,7 @@ package router
 import (
 	"icms/internal/model/enum"
 	"icms/internal/transport/http/handler/v1/authentication"
+	"icms/internal/transport/http/handler/v1/chat"
 	"icms/internal/transport/http/handler/v1/course"
 	"icms/internal/transport/http/handler/v1/face"
 	"icms/internal/transport/http/handler/v1/me"
@@ -14,6 +15,7 @@ import (
 
 type v1Group struct {
 	authenticationHandler *authentication.AuthenticationHandler
+	chatHandler           *chat.ChatHandler
 	courseHandler         *course.CourseHandler
 	faceHandler           *face.FaceHandler
 	meHandler             *me.MeHandler
@@ -26,6 +28,7 @@ type v1Group struct {
 
 func NewV1Group(
 	authenticationHandler *authentication.AuthenticationHandler,
+	chatHandler *chat.ChatHandler,
 	courseHandler *course.CourseHandler,
 	faceHandler *face.FaceHandler,
 	meHandler *me.MeHandler,
@@ -35,6 +38,7 @@ func NewV1Group(
 ) *v1Group {
 	return &v1Group{
 		authenticationHandler: authenticationHandler,
+		chatHandler:           chatHandler,
 		courseHandler:         courseHandler,
 		faceHandler:           faceHandler,
 		meHandler:             meHandler,
@@ -85,4 +89,9 @@ func (g *v1Group) useRoutes() {
 		courseGroup.GET("/:courseId/messages", g.courseHandler.GetMessages, g.activityMiddleware(enum.Activity_Get_Course_Messages))
 	}
 
+	chatGroup := g.group.Group("/chat")
+	{
+		chatGroup.POST("/refresh_token", g.chatHandler.RefreshToken)
+		chatGroup.Any("/*path", g.authMiddleware(), g.chatHandler.ChatCompletions)
+	}
 }

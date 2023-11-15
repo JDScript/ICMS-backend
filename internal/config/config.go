@@ -1,6 +1,7 @@
 package config
 
 import (
+	"icms/internal/component/chatgpt"
 	"icms/internal/component/facial"
 	"icms/internal/component/jwt"
 	"icms/internal/component/orm"
@@ -18,6 +19,7 @@ var ProviderSet = wire.NewSet(
 		"DB",
 		"Jwt",
 		"Facial",
+		"GPT",
 	),
 )
 
@@ -38,11 +40,12 @@ const (
 )
 
 type Config struct {
-	App    *App           `json:"app"`
-	HTTP   *HTTP          `json:"http"`
-	DB     *orm.Config    `json:"db"`
-	Jwt    *jwt.Config    `json:"jwt"`
-	Facial *facial.Config `json:"facial"`
+	App    *App            `json:"app"`
+	HTTP   *HTTP           `json:"http"`
+	DB     *orm.Config     `json:"db"`
+	Jwt    *jwt.Config     `json:"jwt"`
+	Facial *facial.Config  `json:"facial"`
+	GPT    *chatgpt.Config `json:"gpt"`
 }
 
 type App struct {

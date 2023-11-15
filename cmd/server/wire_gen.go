@@ -11,6 +11,7 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"go.uber.org/zap"
 	"icms/internal/command"
+	"icms/internal/component/chatgpt"
 	"icms/internal/component/facial"
 	"icms/internal/component/jwt"
 	"icms/internal/component/orm"
@@ -22,6 +23,7 @@ import (
 	"icms/internal/repository/user"
 	"icms/internal/transport/http"
 	"icms/internal/transport/http/handler/v1/authentication"
+	"icms/internal/transport/http/handler/v1/chat"
 	course2 "icms/internal/transport/http/handler/v1/course"
 	"icms/internal/transport/http/handler/v1/face"
 	"icms/internal/transport/http/handler/v1/me"
@@ -52,6 +54,13 @@ func initApp(configConfig *config.Config, logger log.Logger, zapLogger *zap.Logg
 		return nil, nil, err
 	}
 	authenticationHandler := authentication.NewHandler(userRepository, jwtJwt, facialFacial)
+	chatgptConfig := configConfig.GPT
+	chatGPT, err := chatgpt.New(chatgptConfig, logger)
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	chatHandler := chat.NewHandler(chatGPT)
 	courseRepository := course.New(db)
 	enrolmentRepository := enrolment.New(db)
 	messageRepository := message.New(db)
@@ -62,7 +71,7 @@ func initApp(configConfig *config.Config, logger log.Logger, zapLogger *zap.Logg
 	userHandler := user2.NewHandler(userRepository, facialFacial)
 	activityMiddleware := middleware.NewActivityMiddleware(activityRepository)
 	jwtAuthMiddleware := middleware.NewJWTMiddleware(jwtJwt, userRepository)
-	v1Group := router.NewV1Group(authenticationHandler, courseHandler, faceHandler, meHandler, userHandler, activityMiddleware, jwtAuthMiddleware)
+	v1Group := router.NewV1Group(authenticationHandler, chatHandler, courseHandler, faceHandler, meHandler, userHandler, activityMiddleware, jwtAuthMiddleware)
 	engine := router.New(v1Group)
 	server := http.NewHTTPServer(configConfig, engine)
 	app := newApp(configConfig, logger, server)

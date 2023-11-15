@@ -2,6 +2,7 @@ package handler
 
 import (
 	"icms/internal/transport/http/handler/v1/authentication"
+	"icms/internal/transport/http/handler/v1/chat"
 	"icms/internal/transport/http/handler/v1/course"
 	"icms/internal/transport/http/handler/v1/face"
 	"icms/internal/transport/http/handler/v1/me"
@@ -12,6 +13,7 @@ import (
 
 var ProviderSet = wire.NewSet(
 	authentication.NewHandler,
+	chat.NewHandler,
 	course.NewHandler,
 	face.NewHandler,
 	me.NewHandler,
