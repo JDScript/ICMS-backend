@@ -94,5 +94,5 @@ func (g *v1Group) useRoutes() {
 		chatGroup.Any("/*path", g.authMiddleware(), g.chatHandler.ChatCompletions)
 	}
 
-	g.group.POST("/ms/refresh_token", g.chatHandler.RefreshToken)
+	g.group.GET("/ms/refresh_token", g.chatHandler.RefreshToken)
 }
