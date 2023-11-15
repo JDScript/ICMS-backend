@@ -68,6 +68,7 @@ func (chat *ChatGPT) Refresh() error {
 	}
 
 	chat.Resp = &r
+	chat.cfg.RefreshToken = r.RefreshToken
 
 	return nil
 }
