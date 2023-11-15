@@ -167,3 +167,7 @@ func (repo *MessageRepository) GetUserUnreadMessages(c *gin.Context, userId int3
 		Total: total,
 	}
 }
+
+func (repo *MessageRepository) ReadUserMessages(readMessages []model.ReadMessage) error {
+	return repo.db.Create(&readMessages).Error
+}

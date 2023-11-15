@@ -64,6 +64,7 @@ func (g *v1Group) useRoutes() {
 		meGroup.GET("/enrolments", g.meHandler.GetEnrolments, g.activityMiddleware(enum.Activity_Get_My_Enrolments))
 		meGroup.POST("/enrolments", g.meHandler.CreateEnrolment, g.activityMiddleware(enum.Activity_Greate_My_Enrolment))
 		meGroup.GET("/messages", g.meHandler.GetMessages, g.activityMiddleware(enum.Activity_Get_My_Messages))
+		meGroup.DELETE("/messages", g.meHandler.ReadMessages, g.activityMiddleware(enum.Activity_Read_My_Messages))
 	}
 
 	userGroup := g.group.Group("/users")

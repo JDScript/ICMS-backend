@@ -10,3 +10,7 @@ type MeGetMessagesRequest struct {
 	Order  string `query:"order" vd:"@:mblen($)==0; msg:'No order should be provided'" default:""`
 	Sort   string `query:"sort" vd:"@:mblen($)==0; msg:'No sort should be provided'" default:""`
 }
+
+type MeReadMessagesRequest struct {
+	MessagesID []int64 `json:"messages_id" default:"[]"`
+}
