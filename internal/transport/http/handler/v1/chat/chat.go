@@ -22,6 +22,8 @@ func NewHandler(chat *chat.ChatGPT) *ChatHandler {
 func (h *ChatHandler) ChatCompletions(c *gin.Context) {
 	remote := &h.chat.Endpoint
 
+	c.Writer.Header().Del("Access-Control-Allow-Origin")
+
 	proxy := httputil.NewSingleHostReverseProxy(remote)
 	proxy.Director = func(req *http.Request) {
 		header := c.Request.Header.Clone()
