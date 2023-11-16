@@ -24,14 +24,14 @@ func (h *ChatHandler) ChatCompletions(c *gin.Context) {
 
 	proxy := httputil.NewSingleHostReverseProxy(remote)
 	proxy.Director = func(req *http.Request) {
+		header := c.Request.Header.Clone()
+		header.Set("Authorization", "Bearer "+h.chat.Resp.AccessToken)
+
 		req.Host = remote.Host
 		req.URL.Scheme = remote.Scheme
 		req.URL.Host = remote.Host
 		req.URL.Path = remote.Path + "/completions"
-		req.Header = http.Header{
-			"Authorization": {"Bearer " + h.chat.Resp.AccessToken},
-			"Content-Type":  {"application/json"},
-		}
+		req.Header = header
 	}
 
 	proxy.ServeHTTP(c.Writer, c.Request)

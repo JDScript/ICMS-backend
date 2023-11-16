@@ -2,6 +2,7 @@ package http
 
 import (
 	"fmt"
+	"time"
 
 	"icms/internal/config"
 	"icms/internal/transport/http/handler"
@@ -25,7 +26,10 @@ var ProviderSet = wire.NewSet(
 )
 
 func NewHTTPServer(config *config.Config, g *gin.Engine) *http.Server {
-	srv := http.NewServer(http.Address(fmt.Sprintf("%s:%d", config.HTTP.Host, config.HTTP.Port)))
+	srv := http.NewServer(
+		http.Address(fmt.Sprintf("%s:%d", config.HTTP.Host, config.HTTP.Port)),
+		http.Timeout(time.Second*30),
+	)
 	srv.HandlePrefix("/", g)
 
 	return srv
