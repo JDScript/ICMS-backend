@@ -27,7 +27,7 @@ func (h *ChatHandler) ChatCompletions(c *gin.Context) {
 		req.Host = remote.Host
 		req.URL.Scheme = remote.Scheme
 		req.URL.Host = remote.Host
-		req.URL.Path = remote.Path + c.Param("path")
+		req.URL.Path = remote.Path + "/completions"
 		req.Header = http.Header{
 			"Authorization": {"Bearer " + h.chat.Resp.AccessToken},
 			"Content-Type":  {"application/json"},
