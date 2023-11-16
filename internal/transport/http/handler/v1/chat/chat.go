@@ -22,19 +22,15 @@ func NewHandler(chat *chat.ChatGPT) *ChatHandler {
 func (h *ChatHandler) ChatCompletions(c *gin.Context) {
 	remote := &h.chat.Endpoint
 
-	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-	c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-	c.Writer.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
-
 	proxy := httputil.NewSingleHostReverseProxy(remote)
 	proxy.Director = func(req *http.Request) {
-		req.Header = c.Request.Header
 		req.Host = remote.Host
 		req.URL.Scheme = remote.Scheme
 		req.URL.Host = remote.Host
 		req.URL.Path = remote.Path + c.Param("path")
 		req.Header = http.Header{
 			"Authorization": {"Bearer " + h.chat.Resp.AccessToken},
+			"Content-Type":  {"application/json"},
 		}
 	}
 
