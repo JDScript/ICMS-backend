@@ -1,5 +1,7 @@
 package request
 
+import "mime/multipart"
+
 type CoursePaginateRequest struct {
 	PaginationRequest
 	Search *string `query:"search"`
@@ -17,4 +19,8 @@ type CourseMessagesGetRequest struct {
 	CourseGetRequest
 	Order string `query:"order" vd:"@:mblen($)==0; msg:'No order should be provided'" default:""`
 	Sort  string `query:"sort" vd:"@:mblen($)==0; msg:'No sort should be provided'" default:""`
+}
+
+type CourseImportRequest struct {
+	XLSX *multipart.FileHeader `form:"xlsx,required"`
 }

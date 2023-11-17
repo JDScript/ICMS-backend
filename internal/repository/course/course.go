@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type CourseRepository struct {
@@ -50,4 +51,11 @@ func (repo *CourseRepository) GetCourseContents(courseId int64) []model.CourseSe
 func (repo *CourseRepository) GetCourse(courseId int64) (course *model.Course) {
 	repo.db.Where("id", courseId).Find(&course)
 	return
+}
+
+func (repo *CourseRepository) UpsertCourse(courses []model.Course) error {
+	return repo.db.Clauses(clause.OnConflict{
+		Columns:   []clause.Column{{Name: "code"}, {Name: "year"}, {Name: "section"}},
+		DoUpdates: clause.AssignmentColumns([]string{"timeslots", "instructor"}),
+	}).CreateInBatches(&courses, 100).Error
 }
