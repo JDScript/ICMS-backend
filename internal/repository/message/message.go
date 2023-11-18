@@ -106,7 +106,6 @@ func (repo *MessageRepository) GetUserMessages(c *gin.Context, userId int32) (pa
 	INNER JOIN enrolments E ON CM.course_id = E.course_id
 	WHERE
 		E.user_id = ?
-	GROUP BY CM.id
 	`, userId).Scan(&total)
 
 	return paginator.Paging{
@@ -159,7 +158,6 @@ func (repo *MessageRepository) GetUserUnreadMessages(c *gin.Context, userId int3
 	LEFT JOIN read_messages RM ON CM.id = RM.message_id AND E.user_id = RM.user_id
 	WHERE
 		E.user_id = ? AND RM.read_at IS NULL
-	GROUP BY CM.id
 	`, userId).Scan(&total)
 
 	return paginator.Paging{
