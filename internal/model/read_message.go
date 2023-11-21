@@ -6,5 +6,5 @@ type ReadMessage struct {
 	UserID    int32         `gorm:"primaryKey"`
 	User      User          `gorm:"foreignKey:UserID" json:"-"`
 
-	ReadAt int64 `gorm:"autoCreateTime" json:"created_at"`
+	ReadAt int64 `gorm:"autoCreateTime:milli" json:"created_at"`
 }
