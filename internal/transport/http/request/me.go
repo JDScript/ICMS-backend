@@ -6,9 +6,10 @@ type MeEnrolCourseRequest struct {
 
 type MeGetMessagesRequest struct {
 	PaginationRequest
-	Unread bool   `query:"unread" default:"false"`
-	Order  string `query:"order" vd:"@:mblen($)==0; msg:'No order should be provided'" default:""`
-	Sort   string `query:"sort" vd:"@:mblen($)==0; msg:'No sort should be provided'" default:""`
+	CourseId *int64 `query:"course_id"`
+	Unread   bool   `query:"unread" default:"false"`
+	Order    string `query:"order" vd:"@:mblen($)==0; msg:'No order should be provided'" default:""`
+	Sort     string `query:"sort" vd:"@:mblen($)==0; msg:'No sort should be provided'" default:""`
 }
 
 type MeReadMessagesRequest struct {

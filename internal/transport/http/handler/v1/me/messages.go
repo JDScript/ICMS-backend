@@ -4,7 +4,6 @@ import (
 	"icms/internal/model"
 	"icms/internal/transport/http/request"
 	"icms/pkg/auth"
-	"icms/pkg/paginator"
 	"icms/pkg/response"
 	"net/http"
 
@@ -18,13 +17,7 @@ func (handler *MeHandler) GetMessages(c *gin.Context) {
 	}
 
 	user := auth.CurrentUser(c)
-	var paging paginator.Paging
-
-	if req.Unread {
-		paging = handler.messageRepo.GetUserUnreadMessages(c, user.ID)
-	} else {
-		paging = handler.messageRepo.GetUserMessages(c, user.ID)
-	}
+	paging := handler.messageRepo.GetUserMessages(c, user.ID, req.CourseId, req.Unread)
 
 	response.JSON(c, http.StatusOK, true, "Query success", paging)
 }
