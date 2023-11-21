@@ -3,12 +3,14 @@ module icms
 go 1.20
 
 require (
+	github.com/360EntSecGroup-Skylar/excelize v1.4.1
 	github.com/Kagami/go-face v0.0.0-20210630145111-0c14797b4d0e
 	github.com/bytedance/go-tagexpr/v2 v2.9.11
 	github.com/gin-contrib/cors v1.4.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-kratos/kratos/contrib/log/zap/v2 v2.0.0-20231102162905-3fc8fb7a0a0b
 	github.com/go-kratos/kratos/v2 v2.7.1
+	github.com/go-sql-driver/mysql v1.7.1
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/google/uuid v1.4.0
 	github.com/google/wire v0.5.0
@@ -21,6 +23,7 @@ require (
 	github.com/thoas/go-funk v0.9.3
 	go.uber.org/zap v1.26.0
 	golang.org/x/crypto v0.14.0
+	gorm.io/datatypes v1.2.0
 	gorm.io/driver/mysql v1.5.2
 	gorm.io/driver/postgres v1.5.4
 	gorm.io/gorm v1.25.5
@@ -28,7 +31,6 @@ require (
 )
 
 require (
-	github.com/360EntSecGroup-Skylar/excelize v1.4.1 // indirect
 	github.com/andeya/ameda v1.5.3 // indirect
 	github.com/andeya/goutil v1.0.1 // indirect
 	github.com/bytedance/sonic v1.9.1 // indirect
@@ -42,7 +44,6 @@ require (
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.14.0 // indirect
-	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
@@ -80,6 +81,7 @@ require (
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230629202037-9506855d4529 // indirect
 	google.golang.org/grpc v1.56.1 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
+	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
+	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	gorm.io/datatypes v1.2.0 // indirect
 )

@@ -14,6 +14,10 @@ type CourseSectionsGetRequest struct {
 	CourseGetRequest
 }
 
+type CourseSendMailRequest struct {
+	CourseGetRequest
+}
+
 type CourseMessagesGetRequest struct {
 	PaginationRequest
 	CourseGetRequest
