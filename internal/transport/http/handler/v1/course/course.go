@@ -12,7 +12,11 @@ type CourseHandler struct {
 	messageRepo   *message.MessageRepository
 }
 
-func NewHandler(courseRepo *course.CourseRepository, enrolmentRepo *enrolment.EnrolmentRepository, messageRepo *message.MessageRepository) *CourseHandler {
+func NewHandler(
+	courseRepo *course.CourseRepository,
+	enrolmentRepo *enrolment.EnrolmentRepository,
+	messageRepo *message.MessageRepository,
+) *CourseHandler {
 	return &CourseHandler{
 		courseRepo:    courseRepo,
 		enrolmentRepo: enrolmentRepo,

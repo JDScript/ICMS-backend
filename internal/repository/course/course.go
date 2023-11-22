@@ -59,3 +59,14 @@ func (repo *CourseRepository) UpsertCourse(courses []model.Course) error {
 		DoUpdates: clause.AssignmentColumns([]string{"timeslots", "instructor"}),
 	}).CreateInBatches(&courses, 100).Error
 }
+
+func (repo *CourseRepository) GetLatestCourseModules(courseId int64, limit int64) []model.CourseModule {
+	latestModules := []model.CourseModule{}
+	repo.db.
+		Where("course_id", courseId).
+		Order("updated_at DESC").
+		Limit(3).
+		Find(&latestModules)
+
+	return latestModules
+}

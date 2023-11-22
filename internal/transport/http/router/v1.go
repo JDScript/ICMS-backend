@@ -86,7 +86,7 @@ func (g *v1Group) useRoutes() {
 		courseGroup.GET("", g.courseHandler.Paginate, g.activityMiddleware(enum.Activity_Search_All_Courses))
 		courseGroup.POST("", g.courseHandler.Import)
 		courseGroup.GET("/:courseId", g.courseHandler.Get, g.activityMiddleware(enum.Activity_Get_Course_Detail))
-		courseGroup.GET("/:courseId/send", g.courseHandler.SendMail, g.activityMiddleware(enum.Activity_Send_Course_Detail))
+		courseGroup.POST("/:courseId/emails", g.courseHandler.SendMail, g.activityMiddleware(enum.Activity_Send_Course_Detail))
 		courseGroup.GET("/:courseId/sections", g.courseHandler.GetSections, g.activityMiddleware(enum.Activity_Get_Course_Sections))
 		courseGroup.GET("/:courseId/messages", g.courseHandler.GetMessages, g.activityMiddleware(enum.Activity_Get_Course_Messages))
 	}

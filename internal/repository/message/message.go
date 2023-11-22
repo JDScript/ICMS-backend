@@ -115,3 +115,14 @@ func (repo *MessageRepository) GetUserMessages(c *gin.Context, userId int32, cou
 func (repo *MessageRepository) ReadUserMessages(readMessages []model.ReadMessage) error {
 	return repo.db.Create(&readMessages).Error
 }
+
+func (repo *MessageRepository) GetLatestCourseMessages(courseId int64, limit int64) []model.CourseMessage {
+	latestMessages := []model.CourseMessage{}
+	repo.db.
+		Where("course_id", courseId).
+		Order("updated_at DESC").
+		Limit(3).
+		Find(&latestMessages)
+
+	return latestMessages
+}

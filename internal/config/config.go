@@ -20,6 +20,7 @@ var ProviderSet = wire.NewSet(
 		"Jwt",
 		"Facial",
 		"GPT",
+		"Email",
 	),
 )
 
@@ -46,6 +47,7 @@ type Config struct {
 	Jwt    *jwt.Config     `json:"jwt"`
 	Facial *facial.Config  `json:"facial"`
 	GPT    *chatgpt.Config `json:"gpt"`
+	Email  *Email          `json:"email"`
 }
 
 type App struct {
@@ -56,4 +58,11 @@ type App struct {
 type HTTP struct {
 	Host string `json:"host"`
 	Port int64  `json:"port"`
+}
+
+type Email struct {
+	Host     string `json:"host"`
+	Port     int    `json:"port"`
+	User     string `json:"user"`
+	Password string `json:"password"`
 }
