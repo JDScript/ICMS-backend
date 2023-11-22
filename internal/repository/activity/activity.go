@@ -31,6 +31,14 @@ func (repo *ActivityRepository) PaginateByUser(
 	activities := []model.Activity{}
 	query := repo.db.Model(&activities).Where("user_id", userId)
 
+	if req.Method != nil && len(*req.Method) > 0 {
+		query = query.Where("method IN ?", *req.Method)
+	}
+
+	if req.Type != nil && len(*req.Type) > 0 {
+		query = query.Where("type IN ?", *req.Type)
+	}
+
 	paging = paginator.Paginate(
 		c,
 		query,
