@@ -14,6 +14,7 @@ const (
 	Activity_Read_My_Messages    ActivityType = "read_my_messages"
 	Activity_Search_All_Courses  ActivityType = "search_all_courses"
 	Activity_Get_Course_Detail   ActivityType = "get_course_detail"
+	Activity_Send_Course_Detail  ActivityType = "send_course_detail"
 	Activity_Get_Course_Sections ActivityType = "get_course_sections"
 	Activity_Get_Course_Messages ActivityType = "get_course_messages"
 	Activity_Unknown             ActivityType = "unknown"
