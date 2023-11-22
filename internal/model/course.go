@@ -6,16 +6,16 @@ import (
 )
 
 type Course struct {
-	ID         int64   `gorm:"primaryKey" json:"id"`
-	Code       string  `gorm:"varchar(16);index:idx_course_uniq,unique;index;not null" json:"code"`
-	Year       int     `gorm:"index:idx_course_uniq,unique;not null" json:"year"`
-	Section    string  `gorm:"varchar(4);index:idx_course_uniq,unique;not null" json:"section"`
-	Title      string  `gorm:"varchar(255);index;not null" json:"title"`
-	Instructor string  `gorm:"varchar(255);" json:"instructor"`
-	Summary    string  `gorm:"text" json:"summary"`
-	ZoomLink   *string `gorm:"varchar(255)" json:"zoom_link"`
+	ID       int64   `gorm:"primaryKey" json:"id"`
+	Code     string  `gorm:"varchar(16);index:idx_course_uniq,unique;index;not null" json:"code"`
+	Year     int     `gorm:"index:idx_course_uniq,unique;not null" json:"year"`
+	Section  string  `gorm:"varchar(4);index:idx_course_uniq,unique;not null" json:"section"`
+	Title    string  `gorm:"varchar(255);index;not null" json:"title"`
+	Summary  string  `gorm:"text" json:"summary"`
+	ZoomLink *string `gorm:"varchar(255)" json:"zoom_link"`
 
 	Timeslots CourseTimeslots `gorm:"type:json" json:"slots,omitempty"`
+	Teachers  []User          `gorm:"many2many:course_teachers" json:"teachers"`
 
 	CommonTimestampField
 }

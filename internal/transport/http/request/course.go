@@ -5,6 +5,7 @@ import "mime/multipart"
 type CoursePaginateRequest struct {
 	PaginationRequest
 	Search *string `query:"search"`
+	Sort   string  `query:"sort" default:"code"`
 }
 type CourseGetRequest struct {
 	CourseID int64 `path:"courseId"`

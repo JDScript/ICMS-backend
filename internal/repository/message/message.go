@@ -26,34 +26,29 @@ func (repo *MessageRepository) GetCourseMessages(c *gin.Context, courseId int64,
 	messages := make([]model.CourseMessage, 0)
 	var total int64
 
-	repo.db.Raw(`
-	SELECT
-		CM.id,
-		CM.course_id,
-		CM.title,
-		CM.content,
-		RM.read_at,
-		CM.created_at,
-		CM.updated_at
-	FROM
-		course_messages CM
-	LEFT JOIN read_messages RM ON CM.id = RM.message_id
-	WHERE
-		RM.user_id = ? AND CM.course_id = ?
-	ORDER BY CM.created_at DESC
-	LIMIT ? OFFSET ?
-	`, userId, courseId, pageSize, (page-1)*pageSize).Scan(&messages)
+	query := repo.db.
+		Select(
+			"CM.id",
+			"CM.course_id",
+			"CM.title",
+			"CM.content",
+			"CM.sender_id",
+			"RM.read_at",
+			"CM.created_at",
+			"CM.updated_at",
+			"U.id AS Sender__id",
+			"U.name AS Sender__name",
+			"U.email AS Sender__email",
+		).
+		Table("course_messages as CM").
+		Joins("LEFT JOIN read_messages RM ON RM.user_id = ? AND CM.id = RM.message_id", userId).
+		Joins("LEFT JOIN users U ON CM.sender_id = U.id").
+		Where("CM.course_id", courseId)
 
-	repo.db.Raw(`
-	SELECT
-		COUNT(CM.id)
-	FROM
-		course_messages CM
-	INNER JOIN enrolments E ON CM.course_id = E.course_id
-	LEFT JOIN read_messages RM ON CM.id = RM.message_id AND E.user_id = RM.user_id
-	WHERE
-		E.user_id = ? AND E.course_id = ?
-	`, userId, courseId).Scan(&total)
+	query.Count(&total)
+	query.Order("CM.created_at DESC").
+		Limit(pageSize).
+		Offset((page - 1) * pageSize).Scan(&messages)
 
 	return paginator.Paging{
 		List:  messages,
@@ -74,6 +69,7 @@ func (repo *MessageRepository) GetUserMessages(c *gin.Context, userId int32, cou
 			"CM.course_id",
 			"CM.title",
 			"CM.content",
+			"CM.sender_id",
 			"RM.read_at",
 			"CM.created_at",
 			"CM.updated_at",
@@ -82,15 +78,18 @@ func (repo *MessageRepository) GetUserMessages(c *gin.Context, userId int32, cou
 			"C.year AS Course__year",
 			"C.section AS Course__section",
 			"C.title AS Course__title",
-			"C.instructor AS Course__instructor",
 			"C.summary AS Course__summary",
 			"C.zoom_link AS Course__zoom_link",
+			"U.id AS Sender__id",
+			"U.name AS Sender__name",
+			"U.email AS Sender__email",
 		).
 		Table("course_messages as CM").
 		// Inner join 筛选用户要看到的 信息
 		Joins("INNER JOIN enrolments E ON CM.course_id = E.course_id").
 		Joins("LEFT JOIN read_messages RM ON CM.id = RM.message_id AND E.user_id = RM.user_id").
 		Joins("LEFT JOIN courses C ON CM.course_id = C.id").
+		Joins("LEFT JOIN users U ON CM.sender_id = U.id").
 		Where("E.user_id", userId)
 
 	if courseId != nil {

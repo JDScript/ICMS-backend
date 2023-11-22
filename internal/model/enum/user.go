@@ -3,7 +3,7 @@ package enum
 type UserIdentity string
 
 const (
-	UserIdentity_Student EnrolmentIdentity = "student"
-	UserIdentity_Teacher EnrolmentIdentity = "teacher"
-	UserIdentity_Admin   EnrolmentIdentity = "admin"
+	UserIdentity_Student UserIdentity = "student"
+	UserIdentity_Teacher UserIdentity = "teacher"
+	UserIdentity_Admin   UserIdentity = "admin"
 )

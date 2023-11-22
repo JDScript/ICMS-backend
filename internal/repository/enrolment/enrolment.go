@@ -18,7 +18,7 @@ func New(db *gorm.DB) *EnrolmentRepository {
 
 func (repo *EnrolmentRepository) EnrolledCourses(userId int32) []model.Enrolment {
 	enrolments := make([]model.Enrolment, 0)
-	repo.db.Model(&enrolments).Where("user_id", userId).Preload("Course").Find(&enrolments)
+	repo.db.Model(&enrolments).Where("user_id", userId).Preload("Course").Preload("Course.Teachers").Find(&enrolments)
 	return enrolments
 }
 

@@ -26,7 +26,7 @@ func (repo *CourseRepository) PaginateCourses(
 	req *request.CoursePaginateRequest,
 ) (paging paginator.Paging) {
 	courses := []model.Course{}
-	query := repo.db.Model(&courses)
+	query := repo.db.Model(&courses).Preload("Teachers")
 
 	if req.Search != nil {
 		q := strings.ToLower("%" + *req.Search + "%")
@@ -49,14 +49,14 @@ func (repo *CourseRepository) GetCourseContents(courseId int64) []model.CourseSe
 }
 
 func (repo *CourseRepository) GetCourse(courseId int64) (course *model.Course) {
-	repo.db.Where("id", courseId).Find(&course)
+	repo.db.Where("id", courseId).Preload("Teachers").Find(&course)
 	return
 }
 
 func (repo *CourseRepository) UpsertCourse(courses []model.Course) error {
 	return repo.db.Clauses(clause.OnConflict{
 		Columns:   []clause.Column{{Name: "code"}, {Name: "year"}, {Name: "section"}},
-		DoUpdates: clause.AssignmentColumns([]string{"timeslots", "instructor"}),
+		DoUpdates: clause.AssignmentColumns([]string{"timeslots"}),
 	}).CreateInBatches(&courses, 100).Error
 }
 
